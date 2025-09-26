@@ -7,54 +7,176 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #0f0f0f;
-      color: #f1f1f1;
+      background: radial-gradient(circle at top left, #000 0%, #111 30%, #000 60%),
+                 linear-gradient(135deg, #000 25%, #1a1a1a 100%);
+      background-attachment: fixed;
+      background-size: cover;
+      color: #fff;
       font-family: 'Segoe UI', sans-serif;
     }
-    a {
-      color: #9ca3af;
+    h1, h2 {
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
     }
     a:hover {
-      color: #facc15;
+      color: #fff;
+      text-shadow: 0 0 10px #fff;
+    }
+    .glow-card {
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      cursor: pointer;
+    }
+    .glow-card:hover {
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+      transform: scale(1.03);
+      transition: all 0.3s ease-in-out;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s ease forwards;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .bg-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(45deg, rgba(255,255,255,0.05), rgba(0,0,0,0.3));
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .project-details {
+      display: none;
+      background: rgba(20, 20, 20, 0.95);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .project-details.active {
+      display: block;
+      animation: fadeInUp 0.5s ease forwards;
+    }
+    button {
+      cursor: pointer;
     }
   </style>
+  <script>
+    function openIoTProject() {
+      document.getElementById('iot-details').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function closeIoTProject() {
+      document.getElementById('iot-details').classList.remove('active');
+    }
+  </script>
 </head>
 <body class="p-6">
-  <div class="max-w-4xl mx-auto">
-    <div class="mb-6">
-      <img style="height: 100px;width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/216199214?v=4" alt="profile">
-      <h1 class="text-4xl font-bold">Jennith Pranay Kaile</h1>
-      <p class="text-gray-400">Student | Creative | NCC Cadet | Content Creator</p>
+  <div class="bg-overlay"></div>
+  <div class="max-w-4xl mx-auto space-y-10">
+
+    <!-- Header -->
+    <div class="fade-in text-center">
+      <img class="mx-auto rounded-full border-4 border-white shadow-lg" style="height: 120px; width: 120px;" src="https://avatars.githubusercontent.com/u/216199214?v=4" alt="profile">
+      <h1 class="text-5xl font-bold mt-4">Jennith Pranay Kaile</h1>
+      <!-- Added margin for spacing -->
+      <p class="text-gray-400 mt-3">Tech-driven and Creative Mindset | NCC Cadet | National Sports Player | Student at SAHE University</p>
     </div>
 
-    <section class="mt-10">
-      <h2 class="text-2xl font-semibold mb-2">About Me</h2>
-      <p class="text-gray-300">Hi, I’m Jennith, a 18-year-old with a passion for tech, sketching, sports, and creativity. I’ve represented at the national level in Tennis Volleyball and Softball, hold an NCC A-certificate, and create meme content online. I enjoy reading, crafting, and exploring tech.</p>
+    <!-- About -->
+    <section class="fade-in">
+      <h2 class="text-3xl font-semibold mb-3">About Me</h2>
+      <p class="text-gray-300">Hi,  I am Jennith, a student with ambitions in technology, art, sport, and creative expression. My life is a mixture of interests, I am a person with the ability to imagine. I enjoy creating ideas into visual through sketch and construction, as well as immersing myself into technology and innovation.</p>
     </section>
 
-    <section class="mt-10">
-      <h2 class="text-2xl font-semibold mb-2">Achievements</h2>
-      <ul class="list-disc list-inside text-gray-300">
-        <li>Played Nationals in Softball and Tennis-Volleyball</li>
-        <li>NCC Cadet – A-Certificate</li>
-        <li>Part-time Content Creator</li>
-      </ul>
+    <!-- Projects -->
+    <section class="fade-in">
+      <h2 class="text-3xl font-semibold mb-3">Projects</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="glow-card p-5 rounded-xl" onclick="window.open('portfolio.html', '_blank')">
+          <h3 class="text-xl font-bold mb-2">Portfolio Website</h3>
+          <p class="text-gray-400">A responsive personal portfolio built with Tailwind CSS showcasing my journey, achievements, and skills.</p>
+        </div>
+        <div class="glow-card p-5 rounded-xl" onclick="openIoTProject()">
+          <h3 class="text-xl font-bold mb-2">IoT-Based Smart Waste Management</h3>
+          <p class="text-gray-400">Click to see detailed description of this project, including AI chatbot integration and user-engagement leaderboard.</p>
+        </div>
+      </div>
+
+      <!-- IoT Project Details Embedded -->
+      <div id="iot-details" class="project-details mt-6">
+        <button onclick="closeIoTProject()" class="mb-4 px-4 py-2 bg-yellow-500 rounded text-black font-bold">Close</button>
+        <h2 class="text-3xl font-bold mb-2">IoT-Based Smart Waste Management</h2>
+        <p><strong>Agenda:</strong> To create a prototype of an intelligent waste management system that combines a smart dustbin with an AI chatbot and a user-engagement leaderboard, promoting better sorting habits and environmental awareness.</p>
+        <p><strong>Problem:</strong> Current waste management systems are inefficient, leading to improper waste segregation at the source, creating contaminated waste streams and environmental/health hazards. Lack of user engagement and awareness.</p>
+        <p><strong>Solution:</strong> AI-integrated Smart Waste Management System automates segregation of dry, wet, and e-waste, incentivizing proper disposal through a gamified web platform.</p>
+        <p><strong>Construction:</strong> Sensors detect hand movements and classify waste type/moisture. Users have individual web logins. AI chatbot reviews waste and provides suggestions. Leaderboard encourages proper usage. Ultrasonic, IR, and moisture sensors handle detection and segregation.</p>
+        <p><strong>Key Aspects:</strong> AI integration, global leaderboard, accurate segregation.</p>
+        <p><strong>Expected Outcomes:</strong> Smarter waste segregation, reduced pollution, monitoring daily waste, promoting correct disposal.</p>
+        <p><strong>Differences from Existing Models:</strong> AI system for user-specific review, global leaderboard, smart connectivity.</p>
+      </div>
     </section>
 
-    <section class="mt-10">
-      <h2 class="text-2xl font-semibold mb-2">Hobbies & Interests</h2>
-      <p class="text-gray-300">Sketching, music, reading (manga, novels, history), sports, crafts, dance, and tech.</p>
+    <!-- Skills -->
+    <section class="fade-in">
+      <h2 class="text-3xl font-semibold mb-3">Skills</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glow-card p-5 rounded-xl text-center">
+          <h3 class="font-bold mb-2">HTML & CSS</h3>
+          <p class="text-gray-400">Expertise in building responsive layouts and styling.</p>
+        </div>
+        <div class="glow-card p-5 rounded-xl text-center">
+          <h3 class="font-bold mb-2">Design & Creativity</h3>
+          <p class="text-gray-400">UI/UX, sketching, and creating visually appealing designs.</p>
+        </div>
+        <!-- New Presentation Skills card -->
+        <div class="glow-card p-5 rounded-xl text-center">
+          <h3 class="font-bold mb-2">Presentation Skills</h3>
+          <p class="text-gray-400">Clear communication and effective public speaking.</p>
+        </div>
+      </div>
     </section>
 
-    <section class="mt-10">
-      <h2 class="text-2xl font-semibold mb-2">Social Media</h2>
-      <div class="space-x-4">
+    <!-- Achievements -->
+<section class="fade-in">
+      <h2 class="text-3xl font-semibold mb-3">Achievements</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="glow-card p-5 rounded-xl">
+          <h3 class="text-xl font-bold mb-2">National Level Sports</h3>
+          <p class="text-gray-400">Represented at Nationals in Softball and Tennis-Volleyball, showcasing dedication and teamwork.</p>
+        </div>
+        <div class="glow-card p-5 rounded-xl">
+          <h3 class="text-xl font-bold mb-2">NCC A-Certificate</h3>
+          <p class="text-gray-400">Completed NCC training and earned the A-Certificate, building discipline and leadership qualities.</p>
+        </div>
+        <div class="glow-card p-5 rounded-xl">
+          <h3 class="text-xl font-bold mb-2">Buildathon Achievement</h3>
+          <p class="text-gray-400">Won 2nd place in Buildathon conducted by Anurag University for my IoT-Based Smart Waste Management project — JSM AI-Bin.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Links -->
+    <section class="fade-in text-center">
+      <h2 class="text-3xl font-semibold mb-3">Connect with Me</h2>
+      <div class="flex justify-center space-x-6">
         <a href="https://instagram.com/jennith_k" target="_blank">Instagram</a>
-        <a href="https://youtube.com/@jennith_k" target="_blank">YouTube</a>
         <a href="https://www.linkedin.com/in/jennith-pranay-kaile-595761320/" target="_blank">LinkedIn</a>
         <a href="https://github.com/jennithk" target="_blank">GitHub</a>
       </div>
     </section>
+
   </div>
 </body>
 </html>
